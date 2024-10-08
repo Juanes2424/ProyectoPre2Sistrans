@@ -1,0 +1,8 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<OSDM_Design class="oracle.dbtools.crest.model.design.Design" name="Proyecto-Entrega2" id="303E5CD5-E59F-5C57-1255-E908A10D97AF" version="3.5">
+<createdBy>USER</createdBy>
+<createdTime>2024-09-30 22:48:24 UTC</createdTime>
+<ownerDesignName>Proyecto-Entrega2</ownerDesignName>
+<capitalNames>false</capitalNames>
+<designId>303E5CD5-E59F-5C57-1255-E908A10D97AF</designId>
+</OSDM_Design>
