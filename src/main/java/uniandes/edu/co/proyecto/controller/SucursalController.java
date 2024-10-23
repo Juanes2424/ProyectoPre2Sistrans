@@ -5,9 +5,7 @@ import org.springframework.web.bind.annotation.RestController;
 import uniandes.edu.co.proyecto.modelo.Sucursal;
 import uniandes.edu.co.proyecto.repositorio.SucursalRepository;
 
-import java.util.List;
-
-import org.hibernate.mapping.Collection;
+import java.util.Collection;
 import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,25 +37,13 @@ public class SucursalController {
     }
 
     @GetMapping("/sucursal/consulta/codigo/{codigo_barras}")
-    public ResponseEntity<?> sucursalesConProductoCodigo(@PathVariable Integer codigo_barras) {
+    public ResponseEntity<List<Sucursal>> sucursalesConProductoCodigo(@PathVariable Integer codigo_barras) {
         try {
-            return ResponseEntity.ok(sucursalRepository.darSucursalesConProducto(codigo_barras));
+            List<Sucursal> res = sucursalRepository.darSucursalesConProducto(codigo_barras);
+            return ResponseEntity.ok(res);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
-    // @GetMapping("/sucursal/consulta/codigo/{codigo_barras}")
-    // public ResponseEntity<?> sucursalesConProductoNombre(@PathVariable String
-    // producto,
-    // @PathVariable Integer codigo_barras) {
-
-    // try {
-    // return
-    // ResponseEntity.ok(sucursalRepository.darSucursalesConProducto(producto,
-    // codigo_barras));
-    // } catch (Exception e) {
-    // return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-    // }
-    // }
 }

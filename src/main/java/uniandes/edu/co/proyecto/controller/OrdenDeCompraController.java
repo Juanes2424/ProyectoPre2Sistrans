@@ -88,7 +88,6 @@ public class OrdenDeCompraController {
     @GetMapping("/ordendecompra/obtener")
     public ResponseEntity<Collection<OrdenDeCompra>> obtenerOrdenes() {
         try {
-            System.out.println(">>>>>>>>>>>>>>>>>>ALOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
             Collection<OrdenDeCompra> ordenes = ordenDeCompraRepository.findAllOrdenes();
             return ResponseEntity.ok(ordenes);
         } catch (Exception e) {

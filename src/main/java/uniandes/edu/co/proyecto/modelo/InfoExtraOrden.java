@@ -3,7 +3,7 @@ package uniandes.edu.co.proyecto.modelo;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "InfoExtraOrden")
+@Table(name = "INFOEXTRAORDEN")
 public class InfoExtraOrden {
 
     @EmbeddedId

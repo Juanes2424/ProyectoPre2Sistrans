@@ -13,10 +13,10 @@ public interface InfoExtraOrdenRepository extends JpaRepository<InfoExtraOrden, 
 
     @Modifying
     @Transactional
-    @Query(value = "INSERT INTO InfoExtraOrden (codigo_barras_producto, id_orden, cantidad, costo_unitario_compra) " +
-                   "VALUES (:codigoBarras, :idOrden, :cantidad, :costoUnitarioCompra)", nativeQuery = true)
+    @Query(value = "INSERT INTO INFOEXTRAORDEN (codigo_barras_producto, id_orden, cantidad, costo_unitario_compra) " +
+            "VALUES (:codigoBarras, :idOrden, :cantidad, :costoUnitarioCompra)", nativeQuery = true)
     void insertarInfoExtraOrden(@Param("codigoBarras") String codigoBarras,
-                                 @Param("idOrden") Integer idOrden,
-                                 @Param("cantidad") Integer cantidad,
-                                 @Param("costoUnitarioCompra") Integer costoUnitarioCompra);
+            @Param("idOrden") Integer idOrden,
+            @Param("cantidad") Integer cantidad,
+            @Param("costoUnitarioCompra") Integer costoUnitarioCompra);
 }
