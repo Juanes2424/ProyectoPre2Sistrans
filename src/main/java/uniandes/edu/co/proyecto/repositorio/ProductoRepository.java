@@ -20,7 +20,7 @@ public interface ProductoRepository extends JpaRepository<Producto, String> {
 
         @Modifying
         @Transactional
-        @Query(value = "INSERT INTO producto (codigo_barras, nombre, precio_unitario, presentacion, cantidad_presentacion, unidad_medida_presentacion, cantidad_empaque, unidad_empaque, fecha_expiracion, categoria) VALUES(:codigo_barras, :nombre, :precio_unitario, :presentacion, :cantidad_presentacion, :unidad_medida_presentacion, :cantidad_empaque, :unidad_empaque, :fecha_expiracion, :categoria)", nativeQuery = true)
+        @Query(value = "INSERT INTO producto (codigo_barras, nombre, precio_unitario, presentacion, cantidad_presentacion, unidad_medida_presentacion, cantidad_empaque, unidad_empaque, fecha_expiracion, categoria) VALUES (:codigo_barras, :nombre, :precio_unitario, :presentacion, :cantidad_presentacion, :unidad_medida_presentacion, :cantidad_empaque, :unidad_empaque, TO_DATE(:fecha_expiracion, 'YYYY-MM-DD'), :categoria)", nativeQuery = true)
         void insertarProducto(@Param("codigo_barras") String codigoBarras,
                         @Param("nombre") String nombre,
                         @Param("precio_unitario") Integer precioUnitario,
@@ -34,7 +34,7 @@ public interface ProductoRepository extends JpaRepository<Producto, String> {
 
         @Modifying
         @Transactional
-        @Query(value = "UPDATE productos SET nombre = :nombre, precio_unitario = :precio_unitario, presentacion = :presentacion, cantidad_presentacion = :cantidad_presentacion, unidad_medida_presentacion = :unidad_medida_presentacion, cantidad_empaque = :cantidad_empaque, unidad_empaque = :unidad_empaque, fecha_expiracion = :fecha_expiracion, categoria = :categoria WHERE codigo_barras = :codigo_barras", nativeQuery = true)
+        @Query(value = "UPDATE producto SET nombre = :nombre, precio_unitario = :precio_unitario, presentacion = :presentacion, cantidad_presentacion = :cantidad_presentacion, unidad_medida_presentacion = :unidad_medida_presentacion, cantidad_empaque = :cantidad_empaque, unidad_empaque = :unidad_empaque, fecha_expiracion = TO_DATE(:fecha_expiracion, 'YYYY-MM-DD'), categoria = :categoria WHERE codigo_barras = :codigo_barras", nativeQuery = true)
         void actualizarProducto(@Param("codigo_barras") Integer codigoBarras,
                         @Param("nombre") String nombre,
                         @Param("precio_unitario") Integer precioUnitario,
@@ -43,7 +43,7 @@ public interface ProductoRepository extends JpaRepository<Producto, String> {
                         @Param("unidad_medida_presentacion") String unidadMedidaPresentacion,
                         @Param("cantidad_empaque") Integer cantidadEmpaque,
                         @Param("unidad_empaque") String unidadEmpaque,
-                        @Param("fecha_expiracion") DATE fechaExpiracion,
+                        @Param("fecha_expiracion") String fechaExpiracion,
                         @Param("categoria") String categoriaCodigo);
 
         @Modifying

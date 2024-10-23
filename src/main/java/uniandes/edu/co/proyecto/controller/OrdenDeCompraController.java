@@ -85,26 +85,15 @@ public class OrdenDeCompraController {
         }
     }
 
-    /*
-     * @GetMapping("/ordendecompra/obtener")
-     * public ResponseEntity<Collection<OrdenDeCompra>> obtenerOrdenes() {
-     * try {
-     * Collection<OrdenDeCompra> ordenes = ordenDeCompraRepository.darOrdenes();
-     * return ResponseEntity.ok(ordenes);
-     * } catch (Exception e) {
-     * return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-     * }
-     * }
-     */
-
     @GetMapping("/ordendecompra/obtener")
     public ResponseEntity<Collection<OrdenDeCompra>> obtenerOrdenes() {
         try {
-            Collection<OrdenDeCompra> ordenes = ordenDeCompraRepository.darOrdenes();
-            return new ResponseEntity<>(ordenes, HttpStatus.OK);
+            System.out.println(">>>>>>>>>>>>>>>>>>ALOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+            Collection<OrdenDeCompra> ordenes = ordenDeCompraRepository.findAllOrdenes();
+            return ResponseEntity.ok(ordenes);
         } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
-
     }
+
 }

@@ -12,10 +12,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import uniandes.edu.co.proyecto.modelo.OrdenDeCompra;
 
-public interface OrdenDeCompraRepository extends JpaRepository<OrdenDeCompra, Integer> {
+public interface OrdenDeCompraRepository extends JpaRepository<OrdenDeCompra, Long> {
 
-        @Query(value = "SELECT * FROM OrdenDeCompra", nativeQuery = true)
-        Collection<OrdenDeCompra> darOrdenes();
+        @Query(value = "SELECT * FROM ORDENDECOMPRA", nativeQuery = true)
+        List<OrdenDeCompra> findAllOrdenes();
 
         @Modifying
         @Transactional
@@ -30,5 +30,4 @@ public interface OrdenDeCompraRepository extends JpaRepository<OrdenDeCompra, In
         @Query(value = "UPDATE OrdenDeCompra O SET o.estado = 'anulada' WHERE id = :id AND o.estado != 'entregada'", nativeQuery = true)
         void cambiarAnulado(@Param("id") Integer id);
 
-        List<OrdenDeCompra> findAll();
 }

@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.*;
 import uniandes.edu.co.proyecto.modelo.Producto;
 import uniandes.edu.co.proyecto.repositorio.CategoriaRepository;
 import uniandes.edu.co.proyecto.repositorio.ProductoRepository;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @RequestMapping("")
@@ -21,9 +23,12 @@ public class ProductoController {
     @PostMapping("/producto/new/save")
     public ResponseEntity<String> crearProducto(@RequestBody Producto producto) {
         try {
+            System.out.println("HELLO");
 
             categoriaRepository.findById(producto.getCategoria().getCodigo())
                     .orElseThrow(() -> new IllegalArgumentException("Categoria no encontrada"));
+
+            System.out.println(producto.getCantidad_presentacion());
 
             productoRepository.insertarProducto(
                     producto.getCodigo_barras().toString(),
@@ -43,8 +48,9 @@ public class ProductoController {
         }
     }
 
-    @PutMapping("/productos/{codigo_barras}/edit/save")
+    @PutMapping("/producto/{codigo_barras}/edit/save")
     public ResponseEntity<String> actualizarProducto(@PathVariable Integer codigo_barras,
+
             @RequestBody Producto producto) {
         try {
             productoRepository.actualizarProducto(
@@ -58,9 +64,11 @@ public class ProductoController {
                     producto.getUnidad_empaque(),
                     producto.getFecha_expiracion(),
                     producto.getCategoria().getCodigo());
-            return new ResponseEntity<>("Producto actualizado exitosamente", HttpStatus.OK);
+            return new ResponseEntity<>("Producto actualizado exitosamente",
+                    HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>("Error al actualizar el producto", HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("Error al actualizar el producto",
+                    HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

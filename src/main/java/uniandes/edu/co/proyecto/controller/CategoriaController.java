@@ -29,7 +29,7 @@ public class CategoriaController {
     }
 
     @GetMapping("/categoria/{id}/get")
-    public ResponseEntity<Categoria> obtenerCategoriaPorId(@PathVariable int id) {
+    public ResponseEntity<Categoria> obtenerCategoriaPorId(@PathVariable String id) {
         try {
             Categoria categoria = categoriaRepository.obtenerCategoria(id);
             if (categoria != null) {
