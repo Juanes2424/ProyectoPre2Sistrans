@@ -46,4 +46,14 @@ public class SucursalController {
         }
     }
 
+    @GetMapping("/sucursal/consulta/nombre/{nombre}")
+    public ResponseEntity<List<Sucursal>> sucursalesConProductoNombre(@PathVariable String nombre) {
+        try {
+            List<Sucursal> res = sucursalRepository.darSucursalesConProductoNombre(nombre);
+            return ResponseEntity.ok(res);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
 }

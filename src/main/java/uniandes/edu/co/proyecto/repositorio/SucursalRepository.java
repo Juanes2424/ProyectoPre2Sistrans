@@ -38,4 +38,13 @@ public interface SucursalRepository extends JpaRepository<Sucursal, Integer> {
         // INNER JOIN InfoExtraBodega I ON B.id = I.id_bodega
         // INNER JOIN Producto P ON I.codigo_producto = P.codigo_barras
         // WHERE I.total_existencias > 0 AND P.codigo_barras = 123
+
+        @Query(value = "SELECT Sucursal.* " +
+                        "FROM Sucursal " +
+                        "INNER JOIN Bodega B ON Sucursal.id = B.sucursal " +
+                        "INNER JOIN InfoExtraBodega I ON B.id = I.id_bodega " +
+                        "INNER JOIN Producto P ON I.codigo_producto = P.codigo_barras " +
+                        "WHERE I.total_existencias > 0 AND P.nombre =:nombre ", nativeQuery = true)
+        List<Sucursal> darSucursalesConProductoNombre(@Param("nombre") String nombre);
+
 }
