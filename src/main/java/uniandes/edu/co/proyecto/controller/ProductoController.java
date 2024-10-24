@@ -1,14 +1,15 @@
 package uniandes.edu.co.proyecto.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import uniandes.edu.co.proyecto.modelo.Producto;
+import uniandes.edu.co.proyecto.modelo.Sucursal;
 import uniandes.edu.co.proyecto.repositorio.CategoriaRepository;
 import uniandes.edu.co.proyecto.repositorio.ProductoRepository;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @RequestMapping("")
@@ -84,5 +85,22 @@ public class ProductoController {
         }
 
     }
+
+    @GetMapping("/producto/consulta/caracteristica")
+    public ResponseEntity<List<Producto>> productosConCaracteristicas(@PathVariable Integer precio_superior,
+                                                                        @PathVariable Integer precio_inferior,
+                                                                        @PathVariable String fecha_revision,
+                                                                        @PathVariable  Boolean inferior,
+                                                                        @PathVariable String nombre_sucursal,
+                                                                        @PathVariable String nombre_categoria){
+        
+        try{ List<Producto> res = productoRepository.obtenerProductosConCaracteristica(precio_superior, precio_inferior,fecha_revision, inferior,nombre_sucursal,nombre_categoria );
+            return ResponseEntity.ok(res);
+
+         } catch (Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+         }
+
+     }                                                               
 
 }

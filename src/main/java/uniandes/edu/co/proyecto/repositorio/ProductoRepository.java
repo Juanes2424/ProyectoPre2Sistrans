@@ -1,6 +1,7 @@
 package uniandes.edu.co.proyecto.repositorio;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -59,4 +60,26 @@ public interface ProductoRepository extends JpaRepository<Producto, String> {
                         "JOIN proveedores prov ON p.proveedor_id = prov.id " +
                         "WHERE p.cantidad_presentacion < p.nivel_minimo_reorden", nativeQuery = true)
         Collection<Object[]> obtenerProductosRequierenOrdenCompra();
+
+        @Query(value = "SELECT p.* " +
+               "FROM Producto p " +
+               "INNER JOIN InfoExtraBodega I ON I.codigo_producto = p.codigo_barras" +
+               "INNER JOIN Bodega B ON B.id = I.id_bodega " +
+               "INNER JOIN Sucursal S ON S.id = B.sucursal " +  
+               "INNER JOIN Categoria C ON C.codigo = p.categoria" +  // No sé si se llama categoría
+               "WHERE p.precio_unitario < :precio_superior " +
+               "AND p.precio_unitario > :precio_inferior " +
+               "AND p.fecha_expiracion " + 
+               "  CASE WHEN :inferior = TRUE THEN > :fecha_revision " +
+               "       WHEN :inferior = FALSE THEN < :fecha_revision " +
+               "  END " +
+               "AND S.nombre = :nombre_sucursal " +
+               "AND C.nombre = :nombre_categoria", nativeQuery = true)
+        List<Producto> obtenerProductosConCaracteristica(@Param("precio_superior") Integer precio_superior,
+                                                               @Param("precio_inferior") Integer precio_inferior,
+                                                               @Param("fecha_revision") String fecha_revision,
+                                                               @Param("decision") Boolean inferior,
+                                                               @Param("nombre_sucursal") String nombre_sucursal,
+                                                               @Param("nombre_categoria") String nombre_categoria);
+
 }
