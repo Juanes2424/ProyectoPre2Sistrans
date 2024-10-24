@@ -2,6 +2,7 @@ package uniandes.edu.co.proyecto.repositorio;
 
 import java.util.Collection;
 
+import org.antlr.v4.runtime.atn.SemanticContext.AND;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -12,7 +13,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import uniandes.edu.co.proyecto.modelo.Bodega;
+import uniandes.edu.co.proyecto.modelo.InfoExtraBodega;
 import uniandes.edu.co.proyecto.modelo.Producto;
+import java.util.List;
 
 public interface BodegaRepository extends JpaRepository<Bodega, Integer> {
 
@@ -38,17 +41,22 @@ public interface BodegaRepository extends JpaRepository<Bodega, Integer> {
         void insertarBodega(@Param("nombre") String nombre,
                         @Param("tamano_metros2") Integer tamano_metros2, @Param("sucursal") String sucursal);
 
-        @Query(value = "SELECT PR.nombre AS Producto,\r\n" +
-                        "ib.total_existencias AS Cantidad_Actual,\r\n" +
-                        "ib.nivel_minimo_reorden AS Cantidad_Mínima,\r\n" +
-                        "ib.costo_promedio AS Costo_Promedio\r\n" +
-                        "FROM Producto PR\r\n" +
-                        "INNER JOIN InfoExtraBodega I ON PR.codigo_barras = I.codigo_producto\r\n" +
-                        "INNER JOIN Bodega B ON I.bodega_id = B.id\r\n" +
-                        "INNER JOIN Sucursal S ON B.sucursal_id = S.id\r\n" +
-                        "WHERE S.id = :id_sucursal\r\n" +
-                        "AND B.id = :id_bodega;", nativeQuery = true)
-        Collection<InventarioProducto> darInventarioPorBodega(@Param("id_sucursal") Integer id_sucursal,
+        @Query(value = "SELECT PR.NOMBRE, PR.PRECIO_UNITARIO, PR.PRESENTACION, PR.CANTIDAD_PRESENTACION, PR.UNIDAD_MEDIDA_PRESENTACION, PR.CANTIDAD_EMPAQUE, PR.UNIDAD_EMPAQUE, PR.FECHA_EXPIRACION, PR.CODIGO_BARRAS, PR.CATEGORIA "
+                        +
+                        "FROM Producto PR " +
+                        "INNER JOIN InfoExtraBodega I ON PR.codigo_barras = I.codigo_producto " +
+                        "INNER JOIN Bodega B ON I.id_bodega = B.id " +
+                        "INNER JOIN Sucursal S ON B.sucursal = S.id " +
+                        "WHERE S.id =:id_sucursal " +
+                        "AND B.id =:id_bodega ", nativeQuery = true)
+        List<Producto> darInventarioPorBodega(@Param("id_sucursal") Integer id_sucursal,
                         @Param("id_bodega") Integer id_bodega);
 
+        // SELECT PR.*
+        // FROM Producto PR
+        // INNER JOIN InfoExtraBodega I ON PR.codigo_barras = I.codigo_producto
+        // INNER JOIN Bodega B ON I.id_bodega = B.id
+        // INNER JOIN Sucursal S ON B.sucursal = S.id
+        // WHERE S.id = 4
+        // AND B.id = 6
 }

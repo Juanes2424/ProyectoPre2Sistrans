@@ -3,11 +3,13 @@ package uniandes.edu.co.proyecto.controller;
 import org.springframework.web.bind.annotation.RestController;
 
 import uniandes.edu.co.proyecto.modelo.Bodega;
+import uniandes.edu.co.proyecto.modelo.Producto;
 import uniandes.edu.co.proyecto.repositorio.BodegaRepository;
 import uniandes.edu.co.proyecto.repositorio.BodegaRepository.InventarioProducto;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,21 +39,6 @@ public class BodegaController {
         }
     }
 
-    @GetMapping("/bodega/consulta")
-    public ResponseEntity<?> darInventarioBodega(@RequestParam Integer id_sucursal,
-                                            @RequestParam Integer id_bodega) {
-        try {
-            Collection<InventarioProducto> inventario = bodegaRepository.darInventarioPorBodega(id_sucursal, id_bodega);
-                                            
-            Map<String, Object> response = new HashMap<>();
-            response.put("productosEnBodega", inventario);
-                                            
-            return ResponseEntity.ok(response);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-    }
-
     @GetMapping("/bodega/{id}/delete")
     public ResponseEntity<String> borrarSucursal(@PathVariable("id") String id) {
         try {
@@ -61,4 +48,18 @@ public class BodegaController {
             return new ResponseEntity<String>("Error al borrar bodega", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping("/bodega/rfc3/sucursal/{sucursal}/bodega/{bodega}")
+    public ResponseEntity<?> darInventarioBodega(@PathVariable Integer sucursal,
+            @PathVariable Integer bodega) {
+        try {
+            List<Producto> inventario = bodegaRepository.darInventarioPorBodega(sucursal, bodega);
+
+            return ResponseEntity.ok(inventario);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
 }
