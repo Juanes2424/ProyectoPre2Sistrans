@@ -49,7 +49,7 @@ public interface BodegaRepository extends JpaRepository<Bodega, Integer> {
                         "INNER JOIN Sucursal S ON B.sucursal = S.id " +
                         "WHERE S.id =:id_sucursal " +
                         "AND B.id =:id_bodega ", nativeQuery = true)
-        List<Producto> darInventarioPorBodega(@Param("id_sucursal") Integer id_sucursal,
+        List<?> darInventarioPorBodega(@Param("id_sucursal") Integer id_sucursal,
                         @Param("id_bodega") Integer id_bodega);
 
         // SELECT PR.*

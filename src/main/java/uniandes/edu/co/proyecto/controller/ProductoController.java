@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import jakarta.websocket.server.PathParam;
 import uniandes.edu.co.proyecto.modelo.Producto;
 import uniandes.edu.co.proyecto.modelo.Sucursal;
 import uniandes.edu.co.proyecto.repositorio.CategoriaRepository;
@@ -86,21 +88,25 @@ public class ProductoController {
 
     }
 
-    @GetMapping("/producto/consulta/caracteristica")
-    public ResponseEntity<List<Producto>> productosConCaracteristicas(@PathVariable Integer precio_superior,
-                                                                        @PathVariable Integer precio_inferior,
-                                                                        @PathVariable String fecha_revision,
-                                                                        @PathVariable  Boolean inferior,
-                                                                        @PathVariable String nombre_sucursal,
-                                                                        @PathVariable String nombre_categoria){
-        
-        try{ List<Producto> res = productoRepository.obtenerProductosConCaracteristica(precio_superior, precio_inferior,fecha_revision, inferior,nombre_sucursal,nombre_categoria );
-            return ResponseEntity.ok(res);
+    // @GetMapping("/producto/rfc2/precioSuperior/{precio_superior}/precio")
+    // public ResponseEntity<?> productosConCaracteristicas(@PathParam(value =
+    // "precio_superior") Integer precio_superior,
+    // @PathParam(value = "precio_inferior") Integer precio_inferior,
+    // @PathParam(value = "fecha_revision") String fecha_revision,
+    // @PathParam(value = "nombre_sucursal") String nombre_sucursal,
+    // @PathParam(value = "nombre_categoria") String nombre_categoria) {
 
-         } catch (Exception e){
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-         }
+    // try {
+    // List<?> res =
+    // productoRepository.obtenerProductosConCaracteristica(precio_superior,
+    // precio_inferior,
+    // fecha_revision, nombre_sucursal, nombre_categoria);
+    // return ResponseEntity.ok(res);
 
-     }                                                               
+    // } catch (Exception e) {
+    // return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+    // }
+
+    // }
 
 }

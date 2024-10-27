@@ -53,7 +53,7 @@ public class BodegaController {
     public ResponseEntity<?> darInventarioBodega(@PathVariable Integer sucursal,
             @PathVariable Integer bodega) {
         try {
-            List<Producto> inventario = bodegaRepository.darInventarioPorBodega(sucursal, bodega);
+            List<?> inventario = bodegaRepository.darInventarioPorBodega(sucursal, bodega);
 
             return ResponseEntity.ok(inventario);
         } catch (Exception e) {
