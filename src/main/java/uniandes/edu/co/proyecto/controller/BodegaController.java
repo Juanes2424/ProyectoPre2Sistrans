@@ -50,14 +50,14 @@ public class BodegaController {
     }
 
     @GetMapping("/bodega/rfc3/sucursal/{sucursal}/bodega/{bodega}")
-    public ResponseEntity<?> darInventarioBodega(@PathVariable Integer sucursal,
+    public ResponseEntity<List<?>> darInventarioBodega(@PathVariable Integer sucursal,
             @PathVariable Integer bodega) {
         try {
             List<?> inventario = bodegaRepository.darInventarioPorBodega(sucursal, bodega);
 
             return ResponseEntity.ok(inventario);
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("AHJAO");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }

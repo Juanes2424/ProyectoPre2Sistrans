@@ -89,7 +89,7 @@ public class ProductoController {
 
     }
 
-    @GetMapping("/producto/rfc2")
+    @GetMapping("/producto/rfc2/mayor")
     public ResponseEntity<List<Producto>> productosConCaracteristicas(@RequestBody Map<String, Object> params) {
 
         Integer precio_superior = (params.get("precio_superior") != null)
@@ -102,17 +102,42 @@ public class ProductoController {
 
         String nombre_sucursal = (String) params.get("nombre_sucursal");
         String nombre_categoria = (String) params.get("nombre_categoria");
+        String fecha_revision = (String) params.get("fecha_revision");
 
         try {
-            List<Producto> res = productoRepository.obtenerProductosConCaracteristica(precio_superior,
-                    precio_inferior, nombre_sucursal, nombre_categoria);
+            List<Producto> res = productoRepository.obtenerProductosConCaracteristicaMayor(precio_superior,
+                    precio_inferior, nombre_sucursal, nombre_categoria, fecha_revision);
 
             return ResponseEntity.ok(res);
 
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
-
     }
 
+    @GetMapping("/producto/rfc2/menor")
+    public ResponseEntity<List<Producto>> productosConCaracteristicas2(@RequestBody Map<String, Object> params) {
+
+        Integer precio_superior = (params.get("precio_superior") != null)
+                ? ((Number) params.get("precio_superior")).intValue()
+                : null;
+
+        Integer precio_inferior = (params.get("precio_inferior") != null)
+                ? ((Number) params.get("precio_inferior")).intValue()
+                : null;
+
+        String nombre_sucursal = (String) params.get("nombre_sucursal");
+        String nombre_categoria = (String) params.get("nombre_categoria");
+        String fecha_revision = (String) params.get("fecha_revision");
+
+        try {
+            List<Producto> res = productoRepository.obtenerProductosConCaracteristicaMenor(precio_superior,
+                    precio_inferior, nombre_sucursal, nombre_categoria, fecha_revision);
+
+            return ResponseEntity.ok(res);
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
 }

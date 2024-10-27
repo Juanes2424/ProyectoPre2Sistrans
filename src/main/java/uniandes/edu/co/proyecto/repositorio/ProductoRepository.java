@@ -70,13 +70,31 @@ public interface ProductoRepository extends JpaRepository<Producto, String> {
                         "INNER JOIN Categoria C ON C.codigo = p.categoria " +
                         "WHERE p.precio_unitario < :precio_superior " +
                         "AND p.precio_unitario > :precio_inferior " +
+                        "AND p.fecha_expiracion > TO_DATE(:fecha_revision, 'YYYY-MM-DD') " +
                         "AND S.nombre = :nombre_sucursal " +
                         "AND C.nombre = :nombre_categoria", nativeQuery = true)
-        List<Producto> obtenerProductosConCaracteristica(@Param("precio_superior") Integer precio_superior,
+        List<Producto> obtenerProductosConCaracteristicaMayor(@Param("precio_superior") Integer precio_superior,
                         @Param("precio_inferior") Integer precio_inferior,
                         @Param("nombre_sucursal") String nombre_sucursal,
-                        @Param("nombre_categoria") String nombre_categoria);
+                        @Param("nombre_categoria") String nombre_categoria,
+                        @Param("fecha_revision") String fecha_revision);
 
+        @Query(value = "SELECT p.* " +
+                        "FROM Producto p " +
+                        "INNER JOIN InfoExtraBodega I ON I.codigo_producto = p.codigo_barras " +
+                        "INNER JOIN Bodega B ON B.id = I.id_bodega " +
+                        "INNER JOIN Sucursal S ON S.id = B.sucursal " +
+                        "INNER JOIN Categoria C ON C.codigo = p.categoria " +
+                        "WHERE p.precio_unitario < :precio_superior " +
+                        "AND p.precio_unitario > :precio_inferior " +
+                        "AND p.fecha_expiracion < TO_DATE(:fecha_revision, 'YYYY-MM-DD') " +
+                        "AND S.nombre = :nombre_sucursal " +
+                        "AND C.nombre = :nombre_categoria", nativeQuery = true)
+        List<Producto> obtenerProductosConCaracteristicaMenor(@Param("precio_superior") Integer precio_superior,
+                        @Param("precio_inferior") Integer precio_inferior,
+                        @Param("nombre_sucursal") String nombre_sucursal,
+                        @Param("nombre_categoria") String nombre_categoria,
+                        @Param("fecha_revision") String fecha_revision);
         // SELECT p.*
         // FROM Producto p
         // INNER JOIN InfoExtraBodega I ON I.codigo_producto = p.codigo_barras
@@ -85,7 +103,7 @@ public interface ProductoRepository extends JpaRepository<Producto, String> {
         // INNER JOIN Categoria C ON C.codigo = p.categoria
         // WHERE p.precio_unitario < 1500
         // AND p.precio_unitario > 1000
-        // --AND p.fecha_expiracion > :fecha_revision
+        // --AND p.fecha_expiracion > TO_DATE(:fecha_revision, 'YYYY-MM-DD') 2024-10-20
         // AND S.nombre = 'Norte'
         // AND C.nombre = 'Electrónica'
 
