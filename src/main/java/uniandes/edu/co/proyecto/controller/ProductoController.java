@@ -1,6 +1,7 @@
 package uniandes.edu.co.proyecto.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -88,25 +89,30 @@ public class ProductoController {
 
     }
 
-    // @GetMapping("/producto/rfc2/precioSuperior/{precio_superior}/precio")
-    // public ResponseEntity<?> productosConCaracteristicas(@PathParam(value =
-    // "precio_superior") Integer precio_superior,
-    // @PathParam(value = "precio_inferior") Integer precio_inferior,
-    // @PathParam(value = "fecha_revision") String fecha_revision,
-    // @PathParam(value = "nombre_sucursal") String nombre_sucursal,
-    // @PathParam(value = "nombre_categoria") String nombre_categoria) {
+    @GetMapping("/producto/rfc2")
+    public ResponseEntity<List<Producto>> productosConCaracteristicas(@RequestBody Map<String, Object> params) {
 
-    // try {
-    // List<?> res =
-    // productoRepository.obtenerProductosConCaracteristica(precio_superior,
-    // precio_inferior,
-    // fecha_revision, nombre_sucursal, nombre_categoria);
-    // return ResponseEntity.ok(res);
+        Integer precio_superior = (params.get("precio_superior") != null)
+                ? ((Number) params.get("precio_superior")).intValue()
+                : null;
 
-    // } catch (Exception e) {
-    // return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-    // }
+        Integer precio_inferior = (params.get("precio_inferior") != null)
+                ? ((Number) params.get("precio_inferior")).intValue()
+                : null;
 
-    // }
+        String nombre_sucursal = (String) params.get("nombre_sucursal");
+        String nombre_categoria = (String) params.get("nombre_categoria");
+
+        try {
+            List<Producto> res = productoRepository.obtenerProductosConCaracteristica(precio_superior,
+                    precio_inferior, nombre_sucursal, nombre_categoria);
+
+            return ResponseEntity.ok(res);
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+
+    }
 
 }

@@ -62,22 +62,20 @@ public interface ProductoRepository extends JpaRepository<Producto, String> {
                         "WHERE p.cantidad_presentacion < p.nivel_minimo_reorden", nativeQuery = true)
         Collection<Object[]> obtenerProductosRequierenOrdenCompra();
 
-        // @Query(value = "SELECT p.* " +
-        // "FROM Producto p " +
-        // "INNER JOIN InfoExtraBodega I ON I.codigo_producto = p.codigo_barras " +
-        // "INNER JOIN Bodega B ON B.id = I.id_bodega " +
-        // "INNER JOIN Sucursal S ON S.id = B.sucursal " +
-        // "INNER JOIN Categoria C ON C.codigo = p.categoria " +
-        // "WHERE p.precio_unitario < :precio_superior " +
-        // "AND p.precio_unitario > :precio_inferior " +
-        // "AND S.nombre = :nombre_sucursal " +
-        // "AND C.nombre = :nombre_categoria", nativeQuery = true)
-        // List<?> obtenerProductosConCaracteristica(@Param("precio_superior") Integer
-        // precio_superior,
-        // @Param("precio_inferior") Integer precio_inferior,
-        // @Param("fecha_revision") String fecha_revision,
-        // @Param("nombre_sucursal") String nombre_sucursal,
-        // @Param("nombre_categoria") String nombre_categoria);
+        @Query(value = "SELECT p.* " +
+                        "FROM Producto p " +
+                        "INNER JOIN InfoExtraBodega I ON I.codigo_producto = p.codigo_barras " +
+                        "INNER JOIN Bodega B ON B.id = I.id_bodega " +
+                        "INNER JOIN Sucursal S ON S.id = B.sucursal " +
+                        "INNER JOIN Categoria C ON C.codigo = p.categoria " +
+                        "WHERE p.precio_unitario < :precio_superior " +
+                        "AND p.precio_unitario > :precio_inferior " +
+                        "AND S.nombre = :nombre_sucursal " +
+                        "AND C.nombre = :nombre_categoria", nativeQuery = true)
+        List<Producto> obtenerProductosConCaracteristica(@Param("precio_superior") Integer precio_superior,
+                        @Param("precio_inferior") Integer precio_inferior,
+                        @Param("nombre_sucursal") String nombre_sucursal,
+                        @Param("nombre_categoria") String nombre_categoria);
 
         // SELECT p.*
         // FROM Producto p
