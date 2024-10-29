@@ -47,4 +47,14 @@ public interface SucursalRepository extends JpaRepository<Sucursal, Integer> {
                         "WHERE I.total_existencias > 0 AND P.nombre =:nombre ", nativeQuery = true)
         List<Sucursal> darSucursalesConProductoNombre(@Param("nombre") String nombre);
 
+        @Query(value = "SELECT B.id AS bodegaId, " +
+        "SUM(I.total_existencias) / SUM(I.capacidad_almacenamiento) AS indiceOcupacion " + //REVISAR
+        "FROM Bodega B " +
+        "INNER JOIN InfoExtraBodega I ON B.id = I.id_bodega " +
+        "INNER JOIN Producto P ON I.codigo_producto = P.codigo_barras " +
+        "WHERE B.sucursal = :sucursalId " +
+        "AND P.codigo_barras IN :productos " +
+        "GROUP BY B.id", nativeQuery = true)
+        List<Object[]> obtenerIndiceOcupacionPorBodega(@Param("sucursalId") Long sucursalId,
+                                        @Param("productos") List<String> productos);
 }

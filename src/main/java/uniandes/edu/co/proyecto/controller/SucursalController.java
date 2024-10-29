@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.RestController;
 import uniandes.edu.co.proyecto.modelo.Sucursal;
 import uniandes.edu.co.proyecto.repositorio.SucursalRepository;
 
-import java.util.Collection;
 import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +50,29 @@ public class SucursalController {
         try {
             List<Sucursal> res = sucursalRepository.darSucursalesConProductoNombre(nombre);
             return ResponseEntity.ok(res);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @GetMapping("/sucursal/rfc1/indiceOcupacion/sucursal/{sucursalId}")
+    public ResponseEntity<List<Map<String, Object>>> obtenerIndiceOcupacionPorBodega(
+            @PathVariable Long sucursalId,
+            @RequestBody Map<String, Object> request) {
+        try {
+            @SuppressWarnings("unchecked")
+            List<String> productos = (List<String>) request.get("productos");
+            List<Object[]> resultados = sucursalRepository.obtenerIndiceOcupacionPorBodega(sucursalId, productos);
+            List<Map<String, Object>> respuesta = new ArrayList<>();
+
+            for (Object[] fila : resultados) {
+                Map<String, Object> item = new HashMap<>();
+                item.put("bodegaId", fila[0]);
+                item.put("indiceOcupacion", fila[1]);
+                respuesta.add(item);
+            }
+
+            return ResponseEntity.ok(respuesta);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
