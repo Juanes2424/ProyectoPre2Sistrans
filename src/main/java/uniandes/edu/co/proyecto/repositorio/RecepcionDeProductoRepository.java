@@ -14,16 +14,16 @@ import java.util.List;
 @Repository
 public interface RecepcionDeProductoRepository extends JpaRepository<RecepcionDeProducto, String> {
 
-       /* @Transactional(readOnly = true)
-        @Query("SELECT new uniandes.edu.co.proyecto.dto.DocumentoIngresoDTO(s.nombre, b.nombre, r.id, r.fecha_recepcion, p.nombre) " +
-            "FROM RecepcionDeProducto r " +
-            "JOIN r.id_bodega b " +
-            "JOIN b.sucursal s " +
-            "JOIN r.id_orden_compra o " +
-            "JOIN o.proveedor p " +
-            "WHERE s.id = :idSucursal AND b.id = :idBodega AND r.fecha_recepcion >= CURRENT_DATE - 30")
-        List<DocumentoIngresoDTO> findDocumentosIngresoUltimos30Dias(
+        @Transactional(readOnly = true)
+        @Query(value = "SELECT  O.proveedor AS proveedor,  B.nombre AS nombre_bodega, S.nombre AS nombre_sucursal,"+
+            "R.id AS id_Documento, R.fecha_recepcion AS fecha" +
+            "FROM RecepcionDeProducto R " +
+            "INNER JOIN Bodega B ON B.id = R.id_bodega " +
+            "INNER JOIN Sucursal S ON S.id = B.sucursal " +
+            "INNER JOIN OrdenDeCompra O ON O.id = R.id_orden_compra " +
+            "WHERE S.id = :idSucursal AND b.id = :idBodega AND R.fecha_recepcion >= CURRENT_DATE - 30", nativeQuery = true)
+        List<Object[]> findDocumentosIngresoUltimos30Dias(
                 @Param("idSucursal") Long idSucursal,
                 @Param("idBodega") Long idBodega
-        );*/ 
+        );
 }

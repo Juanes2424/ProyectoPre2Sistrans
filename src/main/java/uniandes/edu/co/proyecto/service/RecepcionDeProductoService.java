@@ -16,12 +16,12 @@ public class RecepcionDeProductoService {
     @Autowired
     private RecepcionDeProductoRepository recepcionDeProductoRepository;
 
-    /* 
+    
     @Transactional(isolation = Isolation.SERIALIZABLE, rollbackFor = Exception.class)
-    public List<RecepcionDeProducto> obtenerDocumentosIngreso(Long idSucursal, Long idBodega) throws InterruptedException {
+    public List<Object[]> obtenerDocumentosIngreso(Long idSucursal, Long idBodega) throws InterruptedException {
         // Espera de 30 segundos
         Thread.sleep(30000);
         // Obtiene la lista de documentos
         return recepcionDeProductoRepository.findDocumentosIngresoUltimos30Dias(idSucursal, idBodega);
-    }*/
+    }
 }
