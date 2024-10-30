@@ -43,6 +43,18 @@ public class RecepcionDeProductoService {
             throw new RuntimeException("Error al obtener los documentos de ingreso. Inténtelo nuevamente más tarde.");
         }
     }
+
+    @Transactional(isolation = Isolation.READ_COMMITTED, rollbackFor = Exception.class)
+    public List<Object[]> obtenerDocumentosIngreso2(Long idSucursal, Long idBodega) throws InterruptedException {
+        try {
+            // Temporizador de 30 segundos
+            Thread.sleep(30000);
+            // Obtiene la lista de documentos
+            return recepcionDeProductoRepository.findDocumentosIngresoUltimos30Dias(idSucursal, idBodega);
+        } catch (Exception e) {
+            throw new RuntimeException("Error al obtener los documentos de ingreso. Inténtelo nuevamente más tarde.");
+        }
+    }
     
     
      
