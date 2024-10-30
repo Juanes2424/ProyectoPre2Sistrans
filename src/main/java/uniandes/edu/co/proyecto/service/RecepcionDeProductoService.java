@@ -16,12 +16,32 @@ public class RecepcionDeProductoService {
     @Autowired
     private RecepcionDeProductoRepository recepcionDeProductoRepository;
 
-    /* 
-    @Transactional(isolation = Isolation.SERIALIZABLE, rollbackFor = Exception.class)
-    public List<RecepcionDeProducto> obtenerDocumentosIngreso(Long idSucursal, Long idBodega) throws InterruptedException {
-        // Espera de 30 segundos
-        Thread.sleep(30000);
-        // Obtiene la lista de documentos
-        return recepcionDeProductoRepository.findDocumentosIngresoUltimos30Dias(idSucursal, idBodega);
-    }*/
+    public RecepcionDeProductoService(RecepcionDeProductoRepository recepcionDeProductoRepository) {
+        this.recepcionDeProductoRepository = recepcionDeProductoRepository;
+    }
+
+    @Transactional(isolation = Isolation.SERIALIZABLE)
+    public void rf10(int orden, int bodega) {
+        try {
+            recepcionDeProductoRepository.crearDocumento(orden, bodega);
+            recepcionDeProductoRepository.actualizarAvgCant(orden, bodega);
+            recepcionDeProductoRepository.cambiarAEntregada(orden);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    /*
+     * @Transactional(isolation = Isolation.SERIALIZABLE, rollbackFor =
+     * Exception.class)
+     * public List<RecepcionDeProducto> obtenerDocumentosIngreso(Long idSucursal,
+     * Long idBodega) throws InterruptedException {
+     * // Espera de 30 segundos
+     * Thread.sleep(30000);
+     * // Obtiene la lista de documentos
+     * return
+     * recepcionDeProductoRepository.findDocumentosIngresoUltimos30Dias(idSucursal,
+     * idBodega);
+     * }
+     */
 }

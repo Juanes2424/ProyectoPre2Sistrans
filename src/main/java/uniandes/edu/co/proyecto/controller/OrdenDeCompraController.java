@@ -15,8 +15,7 @@ import uniandes.edu.co.proyecto.repositorio.InfoExtraOrdenRepository;
 import uniandes.edu.co.proyecto.repositorio.OrdenDeCompraRepository;
 import uniandes.edu.co.proyecto.repositorio.ProveedorRepository;
 import uniandes.edu.co.proyecto.repositorio.SucursalRepository;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import uniandes.edu.co.proyecto.service.RecepcionDeProductoService;
 
 @RestController
 public class OrdenDeCompraController {
@@ -32,6 +31,9 @@ public class OrdenDeCompraController {
 
     @Autowired
     private InfoExtraOrdenRepository infoExtraOrdenRepository;
+
+    @Autowired
+    private RecepcionDeProductoService recepcionDeProductoService;
 
     @PostMapping("ordendecompra/new/save")
     public ResponseEntity<String> crearOrdenDeCompra(@RequestBody OrdenDeCompra ordenDeCompra) {
@@ -93,6 +95,13 @@ public class OrdenDeCompraController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
+    }
+
+    @GetMapping("/bodega/rf10/orden/{orden}/bodega/{bodega}")
+    public String rf10(@PathVariable Integer orden, @PathVariable Integer bodega) {
+        recepcionDeProductoService.rf10(orden, bodega);
+
+        return "redirect:/ordendecompra";
     }
 
 }
