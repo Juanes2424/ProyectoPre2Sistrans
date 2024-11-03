@@ -1,12 +1,14 @@
 package uniandes.edu.co.proyecto.modelo;
 
 import jakarta.persistence.*;
+
+import java.io.Serializable;
 import java.sql.Date;
 import java.util.Set;
 
 @Entity
 @Table(name = "OrdenDeCompra")
-public class OrdenDeCompra {
+public class OrdenDeCompra implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

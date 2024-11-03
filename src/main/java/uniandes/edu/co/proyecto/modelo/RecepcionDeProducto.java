@@ -1,5 +1,6 @@
 package uniandes.edu.co.proyecto.modelo;
 
+import java.io.Serializable;
 import java.sql.Date;
 
 import jakarta.persistence.Entity;
@@ -13,7 +14,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "RecepcionDeProducto")
-public abstract class RecepcionDeProducto {
+public abstract class RecepcionDeProducto implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

@@ -8,9 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import jakarta.websocket.server.PathParam;
 import uniandes.edu.co.proyecto.modelo.Producto;
-import uniandes.edu.co.proyecto.modelo.Sucursal;
 import uniandes.edu.co.proyecto.repositorio.CategoriaRepository;
 import uniandes.edu.co.proyecto.repositorio.ProductoRepository;
 

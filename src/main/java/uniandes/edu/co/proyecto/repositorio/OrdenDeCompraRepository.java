@@ -9,7 +9,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
-import uniandes.edu.co.proyecto.modelo.InfoExtraBodega;
 import uniandes.edu.co.proyecto.modelo.OrdenDeCompra;
 
 public interface OrdenDeCompraRepository extends JpaRepository<OrdenDeCompra, Long> {

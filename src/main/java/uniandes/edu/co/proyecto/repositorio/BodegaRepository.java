@@ -1,20 +1,15 @@
 package uniandes.edu.co.proyecto.repositorio;
 
-import java.util.Collection;
-
-import org.antlr.v4.runtime.atn.SemanticContext.AND;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.http.ResponseEntity;
+
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+
 
 import uniandes.edu.co.proyecto.modelo.Bodega;
-import uniandes.edu.co.proyecto.modelo.InfoExtraBodega;
-import uniandes.edu.co.proyecto.modelo.Producto;
+
 import java.util.List;
 
 public interface BodegaRepository extends JpaRepository<Bodega, Integer> {

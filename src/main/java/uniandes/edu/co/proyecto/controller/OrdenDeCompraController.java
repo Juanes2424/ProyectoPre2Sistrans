@@ -2,7 +2,6 @@ package uniandes.edu.co.proyecto.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -97,9 +96,16 @@ public class OrdenDeCompraController {
         }
     }
 
+    @GetMapping("/bodega/rf10/serializable/orden/{orden}/bodega/{bodega}")
+    public String rf10Serializable(@PathVariable Integer orden, @PathVariable Integer bodega) {
+        recepcionDeProductoService.rf10Serializable(orden, bodega);
+
+        return "redirect:/ordendecompra";
+    }
+
     @GetMapping("/bodega/rf10/orden/{orden}/bodega/{bodega}")
-    public String rf10(@PathVariable Integer orden, @PathVariable Integer bodega) {
-        recepcionDeProductoService.rf10(orden, bodega);
+    public String rf10ReadCommitted(@PathVariable Integer orden, @PathVariable Integer bodega) {
+        recepcionDeProductoService.rf10ReadCommited(orden, bodega);
 
         return "redirect:/ordendecompra";
     }
